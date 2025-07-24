@@ -3,334 +3,291 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enhanced Garry's Mod Loading Screen</title>
+    <title>Server Rules</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
-
-        @keyframes wave {
-            0%, 100% { transform: translateX(-50%) translateY(0); }
-            50% { transform: translateX(-50%) translateY(-10px); }
-        }
-        @keyframes pulse {
-            0%, 100% { opacity: 0.5; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.05); }
-        }
-        @keyframes move {
-            0% { left: -160px; }
-            100% { left: calc(100% + 160px); }
-        }
-        @keyframes rotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        @keyframes flicker {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.8; }
-        }
-        @keyframes glitch {
-            0% {
-                clip-path: inset(40% 0 61% 0);
-                transform: translate(-2px, -1px);
-            }
-            20% {
-                clip-path: inset(92% 0 1% 0);
-                transform: translate(2px, 1px);
-            }
-            40% {
-                clip-path: inset(43% 0 1% 0);
-                transform: translate(-2px, 1px);
-            }
-            60% {
-                clip-path: inset(25% 0 58% 0);
-                transform: translate(2px, -1px);
-            }
-            80% {
-                clip-path: inset(54% 0 7% 0);
-                transform: translate(-2px, 1px);
-            }
-            100% {
-                clip-path: inset(58% 0 43% 0);
-                transform: translate(2px, -1px);
-            }
-        }
-        body, html {
+        body {
+            background-color: #1a1a2e;
+            color: #e0e0e0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
             margin: 0;
-            padding: 0;
-            height: 100%;
-            overflow: hidden;
-            background-color: #000;
-            font-family: 'Orbitron', sans-serif;
-            color: #20ffff;
+            padding: 25px;
         }
         .container {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at center, #001a1a, #000000);
-            overflow: hidden;
-        }
-        .background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                linear-gradient(0deg, transparent 24%, rgba(32, 255, 255, .05) 25%, rgba(32, 255, 255, .05) 26%, transparent 27%, transparent 74%, rgba(32, 255, 255, .05) 75%, rgba(32, 255, 255, .05) 76%, transparent 77%, transparent),
-                linear-gradient(90deg, transparent 24%, rgba(32, 255, 255, .05) 25%, rgba(32, 255, 255, .05) 26%, transparent 27%, transparent 74%, rgba(32, 255, 255, .05) 75%, rgba(32, 255, 255, .05) 76%, transparent 77%, transparent);
-            background-size: 50px 50px;
-            filter: blur(0.5px);
-        }
-        .waves {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 200%;
-            height: 100%;
-            opacity: 0.5;
-            animation: wave 10s infinite ease-in-out;
-        }
-        .wave {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(32, 255, 255, 0.3), transparent);
-            animation: wave 8s linear infinite;
-        }
-        .wave:nth-child(2) {
-            animation-delay: -4s;
-        }
-        .pathway {
-            position: absolute;
-            bottom: 15%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80%;
-            height: 200px;
-            background: rgba(0, 0, 0, 0.7);
-            box-shadow: 0 0 30px rgba(32, 255, 255, 0.5);
-            overflow: hidden;
-            border-radius: 100px;
-        }
-        .pathway::before, .pathway::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(to right, transparent, rgba(32, 255, 255, 1), transparent);
-            box-shadow: 
-                0 0 15px rgba(32, 255, 255, 0.8),
-                0 0 30px rgba(32, 255, 255, 0.6),
-                0 0 45px rgba(32, 255, 255, 0.4);
-            animation: flicker 2s infinite alternate;
-        }
-        .pathway::before { top: -2px; }
-        .pathway::after { bottom: -2px; }
-        .gif {
-            position: absolute;
-            width: 160px;
-            height: 160px;
-            background-size: cover;
-            background-position: center;
-            animation: move 15s linear infinite, pulse 3s infinite;
-            top: 20px;
-            border-radius: 50%;
-            overflow: hidden;
-            cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .gif::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            border-radius: 50%;
-            box-shadow: 
-                inset 0 0 20px rgba(32, 255, 255, 0.8),
-                0 0 15px rgba(32, 255, 255, 0.5);
-            transition: box-shadow 0.3s ease;
-        }
-        .gif:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 30px rgba(32, 255, 255, 0.8);
-        }
-        .gif:hover::after {
-            box-shadow: 
-                inset 0 0 30px rgba(32, 255, 255, 1),
-                0 0 25px rgba(32, 255, 255, 0.7);
-        }
-        .gif:nth-child(1) { animation-delay: 0s, 0s; background-image: url('jane-doe-zenless-zone-zero.gif'); }
-        .gif:nth-child(2) { animation-delay: -3s, -1s; background-image: url('nekomata.gif'); }
-        .gif:nth-child(3) { animation-delay: -6s, -2s; background-image: url('soukaku.gif'); }
-        .gif:nth-child(4) { animation-delay: -9s, -3s; background-image: url('zhuyuan-zenless.gif'); }
-        .gif:nth-child(5) { animation-delay: -12s, -4s; background-image: url('jiggle-gacha.gif'); }
-        .particles {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-        }
-        .particle {
-            position: absolute;
-            background-color: rgba(32, 255, 255, 0.5);
-            border-radius: 50%;
-            animation: pulse 2s infinite, rotate 10s linear infinite;
-        }
-        .ui-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-        }
-        .corner {
-            position: absolute;
-            width: 150px;
-            height: 150px;
-            border: 2px solid rgba(32, 255, 255, 0.5);
+            max-width: 960px;
+            margin: auto;
+            background-color: #16213e;
+            padding: 20px 40px;
             border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            border: 1px solid #0f3460;
         }
-        .top-left { top: 20px; left: 20px; border-right: none; border-bottom: none; }
-        .top-right { top: 20px; right: 20px; border-left: none; border-bottom: none; }
-        .bottom-left { bottom: 20px; left: 20px; border-right: none; border-top: none; }
-        .bottom-right { bottom: 20px; right: 20px; border-left: none; border-top: none; }
-        .loading-text {
-            position: absolute;
-            top: 40%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+        h1, h2, h3 {
+            color: #e94560;
+            border-bottom: 2px solid #e94560;
+            padding-bottom: 10px;
+            margin-top: 30px;
+        }
+        h1 {
+            text-align: center;
             font-size: 3em;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 5px;
-            text-shadow: 0 0 10px rgba(32, 255, 255, 0.8);
+            margin-bottom: 30px;
         }
-        .loading-text::before,
-        .loading-text::after {
-            content: attr(data-text);
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: transparent; /* Changed from #000 to transparent */
-            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+        h2 {
+            font-size: 2.2em;
         }
-        .loading-text::before {
-            left: 1px;
-            text-shadow: -1px 0 #ff00de;
-            animation: glitch 2s infinite linear alternate-reverse;
+        h3 {
+            font-size: 1.6em;
+            color: #53a8b6;
+            border-bottom-style: solid;
+            border-bottom-color: #53a8b6;
         }
-        .loading-text::after {
-            left: -1px;
-            text-shadow: 1px 0 #00fff9;
-            animation: glitch 2s infinite linear alternate;
+        ol {
+            padding-left: 25px;
         }
-        @keyframes glitch {
-            0% {
-                clip-path: inset(40% 0 61% 0);
-                transform: translate(-2px, -1px);
-            }
-            20% {
-                clip-path: inset(92% 0 1% 0);
-                transform: translate(2px, 1px);
-            }
-            40% {
-                clip-path: inset(43% 0 1% 0);
-                transform: translate(-2px, 1px);
-            }
-            60% {
-                clip-path: inset(25% 0 58% 0);
-                transform: translate(2px, -1px);
-            }
-            80% {
-                clip-path: inset(54% 0 7% 0);
-                transform: translate(-2px, 1px);
-            }
-            100% {
-                clip-path: inset(58% 0 43% 0);
-                transform: translate(2px, -1px);
-            }
+        li {
+            margin-bottom: 12px;
+        }
+        strong {
+            color: #f0a500;
+        }
+        code {
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 3px 7px;
+            border-radius: 5px;
+            font-family: 'Courier New', Courier, monospace;
+            color: #c7c7c7;
+        }
+        .section-break {
+            margin-top: 40px;
         }
     </style>
 </head>
 <body>
+
     <div class="container">
-        <div class="background"></div>
-        <div class="waves">
-            <div class="wave"></div>
-            <div class="wave"></div>
+        <h1>Server Rules</h1>
+
+        <!-- Chat Guidelines -->
+        <div class="section-break">
+            <h2>Chat Guidelines</h2>
+            <ol>
+                <li>Always be courteous and respectful.</li>
+                <li>Keep content appropriate - no NSFW material.</li>
+                <li>Advertising is prohibited.</li>
+                <li>Discrimination has no place here.</li>
+                <li>Avoid unnecessary mentions and pings.</li>
+                <li>Bot abuse is forbidden.</li>
+                <li>Share links in their designated channels only.</li>
+                <li>Never share anyone's personal information.</li>
+            </ol>
         </div>
-        <div class="particles"></div>
-        <div class="loading-text" data-text="ARSONIST CLONE WARS RP">ARSONIST CLONE WARS RP</div>
-        <div class="pathway">
-            <div class="gif"></div>
-            <div class="gif"></div>
-            <div class="gif"></div>
-            <div class="gif"></div>
-            <div class="gif"></div>
+
+        <!-- General Server Rules -->
+        <div class="section-break">
+            <h2>General Server Rules</h2>
+            <ol start="2">
+                <li>Zero tolerance for discrimination of any form.</li>
+                <li>Toxic behavior will not be accepted.</li>
+                <li>Promotion and advertising are banned.</li>
+                <li>Using malicious scripts or client mods is forbidden.</li>
+                <li>Staff sits are mandatory - don't leave during one.</li>
+                <li>Ban circumvention through alternate accounts is prohibited.</li>
+                <li>Exploiting game glitches is not permitted.</li>
+                <li>Real money transactions must go through the official store only.</li>
+                <li>Impersonating staff members is forbidden.</li>
+                <li>Mic spamming requires consent - cease when asked.</li>
+                <li>Chat spam is prohibited.</li>
+                <li><strong>RDM (Random Deathmatch)</strong> - killing players without consent is forbidden.</li>
+                <li>Dual wielding is limited to single-sided, non-pike weapons.</li>
+                <li>When cloaked, only Shadow Strike attacks are permitted; you remain IC visible unless actively cloaking.</li>
+                <li>Offensive language is absolutely prohibited.</li>
+                <li>Staff rulings are final in-situation; appeals can be made afterward.</li>
+                <li>Rulebook loophole abuse is forbidden; report any issues.</li>
+                <li>Reversing dual theo is prohibited.</li>
+            </ol>
         </div>
-        <div class="ui-overlay">
-            <div class="corner top-left"></div>
-            <div class="corner top-right"></div>
-            <div class="corner bottom-left"></div>
-            <div class="corner bottom-right"></div>
+
+        <!-- Roleplay Guidelines -->
+        <div class="section-break">
+            <h2>Roleplay Guidelines</h2>
+            <ol start="3">
+                <li>
+                    <h3>Server Activity States:</h3>
+                    <ul>
+                        <li><strong>Uptime</strong> - Active when 10+ players with at least one member per council present. Enemy territory raids require valid RP justification (PTW, Raid, Mission). Uptime status must be advertised in-game AND Discord's "uptime-downtime" channel. Always check the channel for last status before initiating RP events.</li>
+                        <li><strong>Downtime</strong> - Declared by staff when fewer than 10 players are active. Homeworld travel permitted unless locals object. No raids or missions allowed. RP standards may be relaxed at staff discretion. Must be advertised in-game AND Discord's "uptime-downtime" channel.</li>
+                        <li>If uptime hasn't been declared, serious RP events (like raids) cannot begin. If downtime hasn't been declared but one faction lacks council presence OR player count is under 10, serious RP events are still prohibited.</li>
+                    </ul>
+                </li>
+                <li>No <strong>ERP (Erotic Roleplay)</strong> - Absolutely forbidden.</li>
+                <li><strong>Respecting RP</strong> - Honor others' roleplay, including during downtime.</li>
+                <li><strong>Character Names</strong> - Must be original, RP-appropriate, and not based on major Star Wars characters. Names are required.</li>
+                <li><strong>Killing Other Players</strong> - Must have valid RP justification. Crossfire and accidents don't count. RDM incidents are handled IC.</li>
+                <li><strong>New Life Rule (NLR)</strong> - After death, wait 60 seconds before returning and forget all previous information. Neutral worlds exempt from timer.</li>
+                <li><strong>Surrender Protocol</strong> - When surrounded by 3+ armed hostiles under 500 HP, you must surrender. IC/DC+ need 5+ armed players for capture.</li>
+                <li><strong>Metagaming</strong> - Don't use information from past lives or external communications in RP.</li>
+                <li><strong>Roleplay Standards</strong> - RP must be taken seriously and fully acted out.</li>
+                <li><strong>Bunny-Hopping</strong> - Prohibited during RP or combat. Allowed outside combat only.</li>
+                <li><strong>Force-Healing (Non-VIP)</strong> - Permitted for self and others in combat, excluding Meditate/Channel Hatred.</li>
+                <li><strong>Combat Warping</strong> - No warping or using meditate/channel hatred to heal while in combat or being chased.</li>
+                <li><strong>Scamming</strong> - Not allowed and is a bannable offense.</li>
+                <li><strong>Warp Killing</strong> - Give players time to move after warping before engaging.</li>
+                <li><strong>Vaults</strong> - Cannot be breached without an active raid.</li>
+                <li>
+                    <h3>Action Performance</h3>
+                    <p>Use <code>/me</code> or <code>/rp</code> to describe character actions:</p>
+                    <ul>
+                        <li><code>/me</code> for local RP visible to nearby players</li>
+                        <li><code>/rp</code> for server-wide actions during events</li>
+                    </ul>
+                </li>
+                <li>
+                    <h3>Chat Channels:</h3>
+                    <ul>
+                        <li><code>/ooc</code> or <code>//</code> - Out-of-character server chat</li>
+                        <li><code>/advert</code> - Announcements only, use when authorized</li>
+                        <li><code>/global</code> - In-character communication for all</li>
+                        <li><code>/scomms</code> or <code>/sc</code> - Sith in-character communications</li>
+                        <li><code>/jcomms</code> or <code>/jc</code> - Jedi in-character communications</li>
+                    </ul>
+                </li>
+            </ol>
         </div>
+
+        <!-- Faction Regulations -->
+        <div class="section-break">
+            <h2>Faction Regulations</h2>
+            <ol start="4">
+                <li><strong>Leadership Authority</strong> - Faction leaders manage internal rules. Consult them before staff.</li>
+                <li><strong>Council Limits</strong> - One council position per player lifetime.</li>
+                <li><strong>Enemy Spawns</strong> - Off-limits except for OOC purposes.</li>
+                <li><strong>Safe Zones</strong> - Don't enter non-combat areas (community centers) during fights.</li>
+                <li><strong>Organization Storage</strong> - Maximum 20 permanent props.</li>
+                <li><strong>Head Sitting</strong> - Prohibited in combat or when requested to stop.</li>
+                <li><strong>Damage Avoidance</strong> - Don't sit to evade damage.</li>
+                <li><strong>Rank Changes</strong> - Must be online (except Council). No rank jumping. Darths require 24-hour notice for demotion.</li>
+                <li><strong>Honor Guard</strong> - Cannot assist overthrows. Must wait 24 hours after leaving position.</li>
+                <li>
+                    <strong>Faction Conversion</strong> - No forced IC conversions via mind tricks. After converting, wait one week before re-converting the same player. Converted players must be demoted appropriately and meet new faction requirements.
+                    <ul>
+                        <li>Apprentice/Padawan - Remain</li>
+                        <li>Lord/Knight - Demote to Apprentice/Padawan</li>
+                        <li>Darth/Master+ - Demote to Lord/Knight</li>
+                    </ul>
+                </li>
+                <li><strong>Grey Jedi Status</strong> - VIP+ players can become Grey Jedi by requesting staff. Must be on main life as True PK'd if killed IC (non-spare).</li>
+            </ol>
+        </div>
+
+        <!-- Exile/PK Rules -->
+        <div class="section-break">
+            <h2>Exile/PK Rules</h2>
+            <ol start="6">
+                <li>
+                    <h3>PK Types:</h3>
+                    <ul>
+                        <li><strong>Soft PK:</strong> Lose character name and organizational ties.</li>
+                        <li><strong>Hard PK:</strong> Lose 35 levels, character name, and reset to lowest faction rank. Below level 45 = lose 15 levels only. Below level 25 = no level loss.</li>
+                        <li><strong>True PK:</strong> Complete character deletion.</li>
+                    </ul>
+                </li>
+                <li><strong>PK Naming</strong> - PK'd characters must have distinctly different new names.</li>
+                <li><strong>PK Orders & Exiles</strong> - Only Council+ can issue with proper RP justification. PK Orders are Hard PKs. Can be cancelled by issuer or if target joins opposing faction after 30 minutes. Valid targets include the exiled, exiler, and defenders only. AFKs, spawning players, and others are invalid unless they engage.</li>
+                <li><strong>PK Duels</strong> - Must advertise challenge publicly. All terms must be stated or are void. Only mutual agreement can interrupt. Staff announces start; fight to death. Loser receives PK.</li>
+                <li><strong>Early Duel Termination</strong> - Only if both parties publicly forfeit via advert.</li>
+            </ol>
+        </div>
+
+        <!-- Store Guidelines -->
+        <div class="section-break">
+            <h2>Store Guidelines</h2>
+            <ol start="7">
+                <li><strong>PAC-3 Usage</strong> - Must be RP-appropriate. Cannot duplicate store items.</li>
+                <li><strong>Healing Commands</strong> - Prohibited during combat/pursuit. One use per raid life allowed.</li>
+            </ol>
+        </div>
+
+        <!-- Overthrow/Leadership Challenge Rules -->
+        <div class="section-break">
+            <h2>Overthrow/Leadership Challenge Rules</h2>
+            <ol start="8">
+                <li>
+                    <h3>Overthrow Rules</h3>
+                    <ol>
+                        <li><strong>Overthrow Threats</strong> - Documented threats can be handled IC.</li>
+                        <li><strong>Assisting/Defending</strong> - Must announce "Assist" or "Defend" via advert. Attacking without announcement = hard PK and possible overthrow reversal.</li>
+                        <li><strong>Overthrow Location</strong> - Darth+ must initiate on faction homeworld, outside spawn, with Emperor and challenger present. All participants must remain on homeworld.</li>
+                        <li><strong>Frequency</strong> - Maximum once every 3 days.</li>
+                        <li><strong>New Leader Grace</strong> - One week immunity from overthrows. Emperors from forced takeovers inherit predecessor's grace period.</li>
+                        <li><strong>Participation</strong> - Faction members only.</li>
+                        <li><strong>Operations Notice</strong> - Must notify Operations with member present during overthrow.</li>
+                        <li><strong>Completion</strong> - Ends when Emperor or challenger dies/forfeits.</li>
+                        <li><strong>Spawn Protection</strong> - Blocked after overthrow starts to prevent interference; reopened after levels reset.</li>
+                        <li><strong>Event Restrictions</strong> - No overthrows during staff/GM events.</li>
+                        <li><strong>Overthrow Reversal</strong> - Operations may reverse if exploited, fraudulent, or invalid.</li>
+                        <li><strong>Death Penalty</strong> - All participants receive hard PK except Honor Bound.</li>
+                    </ol>
+                </li>
+                <li><strong>Inactive Leader Takeover</strong> - After 1 week of leader inactivity (no login/participation), players may request hostile takeover with Operations approval.</li>
+                <li><strong>Vote of No Confidence</strong> - Only Masters can initiate against Jedi Council. If Council vote fails, can escalate to faction vote.</li>
+                <li><strong>Grandmaster Elections</strong> - Masters+ eligible. Participants announce in <code>/jcomms</code>. All Jedi (except Initiates) vote; highest wins.</li>
+                <li>
+                    <h3>Throne Claims</h3>
+                    <ol>
+                        <li>Throne claims occur after 2 weeks of leader inactivity or abandonment.</li>
+                        <li><strong>Claim Process</strong> - Darth+ must advertise in throne room and remain 5 minutes. Leaving cancels claim. Counter-claims must be advertised. Death restarts timer.</li>
+                        <li><strong>Counter-Claims</strong> - Must announce claimed identity if not self.</li>
+                        <li><strong>Claim Combat</strong> - Only claimants/counter-claimants are PK eligible.</li>
+                        <li><strong>Rule Violations</strong> - Breaking rules during claims (e.g., combat healing) = disqualification and hard PK.</li>
+                    </ol>
+                </li>
+            </ol>
+        </div>
+
+        <!-- Raid/Mission Protocols -->
+        <div class="section-break">
+            <h2>Raid/Mission Protocols</h2>
+            <ol start="9">
+                <li><strong>Raid Initiation</strong> - Must announce in <code>/advert</code> before warping to enemy territory. Cannot start during events or meetings.</li>
+                <li><strong>Raid Conclusion</strong> - Raid caller announces end in <code>/advert</code>. 2-minute timer begins; remaining players after timer are eliminated.</li>
+                <li><strong>Mission Start</strong> - Leader must report: mission start, participant count (5 max), and target location.</li>
+                <li><strong>PK Missions</strong> - Participants accepting PK missions risk Hard PK.</li>
+                <li>
+                    <strong>Cooldown Periods</strong> - Apply to initiating faction only. No consecutive raids on same target.
+                    <ul>
+                        <li>Raids: 1 hour</li>
+                        <li>Missions/Conquests: 30 minutes</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Duration Limits</strong> - Must be concluded by:
+                    <ul>
+                        <li>Both: 20 minutes</li>
+                    </ul>
+                </li>
+                <li><strong>Raid Assistance</strong> - All faction members assisting (offensive or defensive) have one life only.</li>
+                <li><strong>Simultaneous Operations</strong> - Missions allowed during raids and vice versa. Cooldowns apply.</li>
+            </ol>
+        </div>
+
+        <!-- Community Ban Offenses -->
+        <div class="section-break">
+            <h2>Community Ban Offenses</h2>
+            <ul>
+                <li><strong>Hacking</strong> - Using cheats or scripts on server.</li>
+                <li><strong>DDoS</strong> - Attacking or threatening server/player connections.</li>
+                <li><strong>Doxxing</strong> - Revealing personal player information.</li>
+                <li><strong>Backdoors</strong> - Exploiting security vulnerabilities.</li>
+                <li><strong>Advertising</strong> - Promoting other servers/communities through Sapphire.</li>
+                <li><strong>Chargeback</strong> - Reversing donations.</li>
+                <li><strong>Pedophilia</strong> - Verified reports result in permanent ban.</li>
+                <li><strong>Severe Harassment</strong> - Persistent aggressive behavior including DMs.</li>
+                <li><strong>Bigotry</strong> - Discrimination based on race, creed, gender, religion, disability, or protected status.</li>
+            </ul>
+        </div>
+
     </div>
 
-    <audio id="backgroundMusic" loop>
-        <source src="minus8.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var music = document.getElementById('backgroundMusic');
-            music.volume = 0.05;
-            
-            function playMusic() {
-                music.play().catch(function(error) {
-                    console.log("Autoplay was prevented:", error);
-                });
-            }
-
-            playMusic();
-
-            document.body.addEventListener('click', function() {
-                if (music.paused) {
-                    playMusic();
-                }
-            }, { once: true });
-
-            // Create particle effect
-            const particlesContainer = document.querySelector('.particles');
-            for (let i = 0; i < 50; i++) {
-                const particle = document.createElement('div');
-                particle.classList.add('particle');
-                particle.style.width = `${Math.random() * 5 + 1}px`;
-                particle.style.height = particle.style.width;
-                particle.style.left = `${Math.random() * 100}%`;
-                particle.style.top = `${Math.random() * 100}%`;
-                particle.style.animationDuration = `${Math.random() * 2 + 1}s, ${Math.random() * 10 + 5}s`;
-                particlesContainer.appendChild(particle);
-            }
-
-            // Add interactivity to GIFs
-            const gifs = document.querySelectorAll('.gif');
-            gifs.forEach(gif => {
-                gif.addEventListener('click', () => {
-                    gif.style.animationPlayState = gif.style.animationPlayState === 'paused' ? 'running' : 'paused';
-                });
-            });
-        });
-    </script>
 </body>
 </html>
